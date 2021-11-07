@@ -1,0 +1,129 @@
+Global/ResetColumnInformation:
+  Enabled: false # patchsets only, no fail
+
+Lint/RedundantCopDisableDirective:
+  Enabled: false
+
+Lint/RedundantCopEnableDirective:
+  Enabled: false
+
+Lint/UnusedMethodArgument:
+  Enabled: true
+
+Lint/FreezeConstants:
+  Enabled: true
+
+Layout/LineLength:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+  Max: 150
+
+Metrics/MethodLength:
+  Enabled: true
+
+Metrics/AbcSize:
+  Enabled: true
+
+Specs/OmitFocus:
+  Enabled: true
+
+Style/CollectionMethods:
+  Enabled: false
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%':  ()
+    '%i': '[]'
+    '%q': ()
+    '%Q': ()
+    '%r': '{}'
+    '%s': ()
+    '%w': '[]'
+    '%W': '[]'
+    '%x': ()
+
+Style/PerlBackrefs:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/ClassAndModuleChildren:
+  Enabled: true
+
+Layout/MultilineBlockLayout:
+  Enabled: false
+
+Layout/FirstHashElementIndentation:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Layout/TrailingWhitespace:
+  Enabled: true
+
+# Introduced by upgrading to 0.34.0. May be worth enabling.
+Performance/StringReplacement:
+  Enabled: false
+Performance/Count:
+  Enabled: false
+  SafeAutoCorrect: false
+Metrics/ModuleLength:
+  Enabled: false
+Style/ParallelAssignment:
+  Enabled: false
+Style/TrailingUnderscoreVariable:
+  Enabled: false
+Lint/NestedMethodDefinition:
+  Enabled: false
+Layout/EmptyLineBetweenDefs:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Layout/InitialIndentation:
+  Enabled: false
+Style/RedundantFreeze:
+  Enabled: false
+Layout/RescueEnsureAlignment:
+  Enabled: false
+Layout/IndentationWidth:
+  Enabled: false
+Layout/ElseAlignment:
+  Enabled: false
+Layout/ExtraSpacing:
+  Enabled: false
+Layout/SpaceInsideStringInterpolation:
+  Enabled: false
+Style/SafeNavigation:
+  Enabled: false
+
+# Introduced by upgrading to 0.64.1. May be worth enabling.
+Layout/HashAlignment:
+  Enabled: false
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+Style/AccessModifierDeclarations:
+  Enabled: false
+Layout/ClosingHeredocIndentation:
+  Enabled: false
+
+# Introduced by upgrading to 0.8x
+Lint/RaiseException:
+  Enabled: false
+Lint/StructNewOverride:
+  Enabled: false
+Style/HashEachMethods:
+  Enabled: false
+Style/HashTransformKeys:
+  Enabled: false
+Style/HashTransformValues:
+  Enabled: false
+
+Layout/EmptyLinesAroundBlockBody:
+  EnforcedStyle: no_empty_lines
