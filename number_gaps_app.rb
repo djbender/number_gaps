@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
 require_relative 'lib/number_gaps'
-require 'byebug' if ENV.fetch('RACK_ENV', 'development') == 'development
+require 'byebug' if ENV.fetch('RACK_ENV', 'development') == 'development'
 
 class NumberGapsApp < Sinatra::Base
   configure :development do
