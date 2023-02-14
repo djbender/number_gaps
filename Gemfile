@@ -5,7 +5,7 @@ gem 'sinatra', '~> 2.1.0'
 gem 'sinatra-contrib', '~> 2.1.0'
 
 group :production do
-  gem 'puma', '~> 5.5.2', require: false
+  gem 'puma', '~> 5.6.4', require: false
 end
 
 group :development, :test do
