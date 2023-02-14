@@ -13,9 +13,9 @@ class NumberGapsApp < Sinatra::Base
   end
 
   post '/upload' do
-    gaps = NumberGaps.run!(file: params[:file])
+    gaps = NumberGaps.run!(file: params.dig(:file, :tempfile))
 
-    @precision = gaps.last&.l.digits.count
+    @precision = gaps.last&.l&.digits&.count
 
     erb :upload, locals: { gaps: gaps }
   end

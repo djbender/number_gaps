@@ -9,7 +9,7 @@ class NumberGaps
 
     CSV.foreach(file) do |row|
       next if row.compact.empty?
-      current = Integer(row.first)
+      current = row.first.delete("^0-9").to_i
       group_start ||= current
 
       #  1 == 1                        1.succ != 1
