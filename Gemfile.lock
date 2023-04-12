@@ -10,21 +10,21 @@ GEM
     puma (5.6.4)
       nio4r (~> 2.0)
     rack (2.2.6.4)
-    rack-protection (3.0.5)
+    rack-protection (3.0.6)
       rack
     ruby2_keywords (0.0.5)
-    sinatra (3.0.5)
+    sinatra (3.0.6)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
-      rack-protection (= 3.0.5)
+      rack-protection (= 3.0.6)
       tilt (~> 2.0)
-    sinatra-contrib (3.0.5)
+    sinatra-contrib (3.0.6)
       multi_json
       mustermann (~> 3.0)
-      rack-protection (= 3.0.5)
-      sinatra (= 3.0.5)
+      rack-protection (= 3.0.6)
+      sinatra (= 3.0.6)
       tilt (~> 2.0)
-    tilt (2.0.11)
+    tilt (2.1.0)
     webrick (1.8.1)
 
 PLATFORMS
@@ -36,7 +36,7 @@ DEPENDENCIES
   byebug
   foreman
   puma (~> 5.6.4)
-  sinatra (~> 3.0.5)
+  sinatra (~> 3.0.6)
   sinatra-contrib (~> 3.0.5)
   webrick
 
