@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '3.2.1'
 
-gem 'sinatra', '~> 3.0.5'
+gem 'sinatra', '~> 3.0.6'
 gem 'sinatra-contrib', '~> 3.0.5'
 
 group :production do
