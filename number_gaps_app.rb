@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require 'sinatra/reloader'
+require 'sinatra/reloader' if ENV.fetch('RACK_ENV', 'development') == 'development'
 require_relative 'lib/number_gaps'
 require 'byebug' if ENV.fetch('RACK_ENV', 'development') == 'development'
 
@@ -18,11 +18,16 @@ class NumberGapsApp < Sinatra::Base
       column: params.fetch(:column, 1).to_i,
       headers: params.fetch(:headers, "true") == "true"
     )
-
     # this helps display numbers as zero padded values
     @precision = gaps.last&.l&.digits&.count
+    pre = gaps.map do |gap|
+      text = "#{fmt(gap.f)}"
+      text += "-#{fmt(gap.l)}" if gap.f != gap.l
+      text
+    end.join("\n")
 
-    erb :upload, locals: { gaps: gaps }
+
+    erb :upload, locals: { gaps:, pre: }
   end
 
   helpers do
