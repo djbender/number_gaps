@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
+
+require 'rubygems'
+require 'bundler/setup'
+
+# Add lib directory to load path
+$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
+
+# Auto-require all files in lib/
+lib_dir = File.expand_path('../../lib', __FILE__)
+if Dir.exist?(lib_dir)
+  Dir[File.join(lib_dir, '**', '*.rb')].each do |file|
+    require_relative file
+  end
+  puts 'Loaded files from lib/:'
+  Dir[File.join(lib_dir, '**', '*.rb')].each do |file|
+    puts "  #{file.sub(lib_dir + '/', '')}"
+  end
+else
+  puts 'lib/ directory not found'
+end
+
+# Load your main Sinatra app if it exists
+app_file = File.expand_path('../../number_gaps_app.rb', __FILE__)
+if File.exist?(app_file)
+  require_relative app_file
+  puts 'Loaded app'
+else
+  puts 'No app loaded!'
+end
+
+# Start IRB
+puts "\nStarting REPL with lib/ loaded..."
+puts "Type 'exit' to quit\n\n"
+
+require 'irb'
+IRB.start

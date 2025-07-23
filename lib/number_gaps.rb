@@ -2,14 +2,18 @@ require 'csv'
 require_relative 'number_gaps/gap'
 
 class NumberGaps
-  def self.run!(file:)
+  def self.run!(file:, column: 1, headers: false)
     gaps = []
     group_start = nil
     last = nil
 
-    CSV.foreach(file) do |row|
+    require 'byebug'
+    # byebug
+    CSV.foreach(file, headers:,) do |row|
+
       next if row.compact.empty?
-      current = row.first.delete("^0-9").to_i
+      index = column - 1 # usually 0
+      current = row[index].delete("^0-9").to_i
       group_start ||= current
 
       #  1 == 1                        1.succ != 1
