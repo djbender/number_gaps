@@ -13,8 +13,13 @@ class NumberGapsApp < Sinatra::Base
   end
 
   post '/upload' do
-    gaps = NumberGaps.run!(file: params.dig(:file, :tempfile))
+    gaps = NumberGaps.run!(
+      file: params.dig(:file, :tempfile),
+      column: params.fetch(:column, 1).to_i,
+      headers: params.fetch(:headers, "true") == "true"
+    )
 
+    # this helps display numbers as zero padded values
     @precision = gaps.last&.l&.digits&.count
 
     erb :upload, locals: { gaps: gaps }

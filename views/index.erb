@@ -1,6 +1,43 @@
-<p>Upload a CSV with no headers and Interger IDs in the first column: </p>
 <form action='/upload' method='post' enctype='multipart/form-data'>
-  <label for='file'>File:</label>
-  <input name='file' type='file' />
-  <input type='submit' value='Upload' />
+  <fieldset>
+    <legend>Upload a CSV</legend>
+    <label for='file' style='font-weight: bold'>File</label>
+    <input id='file' name='file' type='file' required accept='.csv'/>
+    <label for='column' style='font-weight: bold'>Column Index</label>
+    <select id='column' name='column'>
+      <option value='1'>1</option>
+      <option selected value='2'>2</option>
+      <option value='3'>3</option>
+      <option value='4'>4</option>
+      <option value='5'>5</option>
+      <option value='6'>6</option>
+      <option value='7'>7</option>
+      <option value='8'>8</option>
+      <option value='9'>9</option>
+      <option value='10'>10</option>
+      <option value='11'>11</option>
+      <option value='12'>12</option>
+      <option value='13'>13</option>
+      <option value='14'>14</option>
+      <option value='15'>15</option>
+      <option value='16'>16</option>
+      <option value='17'>17</option>
+      <option value='18'>18</option>
+      <option value='19'>19</option>
+      <option value='20'>20</option>
+    </select>
+
+    <div style='font-weight: bold'>Does the CSV have headers?</div>
+    <div class='radio-group'>
+      <div class='radio-option'>
+        <input type='radio' id='headers' name='headers' value='true' checked>
+        <label for='headers-yes'>Yes</label>
+      </div>
+      <div class='radio-option'>
+        <input type='radio' id='headers-no' name='headers' value='false'>
+        <label for='headers-no'>No</label>
+      </div>
+    </div>
+  </fieldset>
+  <button type='submit'>Find Gaps</button>
 </form>
