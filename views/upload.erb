@@ -4,9 +4,9 @@
 <p>Gaps were found!</p>
 <pre style="overflow: unset"><% gaps.each do |gap| %>
 <% if gap.f == gap.l %>
-<%= "#{fmt(gap.f)}" -%>
+<%= fmt(gap.f) %>
 <% else %>
-<%= "#{fmt(gap.f)}-#{fmt(gap.l)}" -%>
+<%= "#{fmt(gap.f)}-#{fmt(gap.l)}" %>
 <% end %>
 <% end %>
 </pre>
