@@ -7,8 +7,6 @@ class NumberGaps
     group_start = nil
     last = nil
 
-    require 'byebug'
-    # byebug
     CSV.foreach(file, headers:,) do |row|
 
       next if row.compact.empty?
