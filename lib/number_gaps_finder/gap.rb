@@ -7,7 +7,7 @@ class Gap
   end
 
   def pair
-    [f, l]
+    [ f, l ]
   end
 
   def inspect

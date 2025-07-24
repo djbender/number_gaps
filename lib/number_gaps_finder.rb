@@ -1,5 +1,5 @@
-require 'csv'
-require_relative 'number_gaps_finder/gap'
+require "csv"
+require_relative "number_gaps_finder/gap"
 
 class NumberGapsFinder
   def self.run!(file:, column: 1, headers: false)
@@ -8,7 +8,6 @@ class NumberGapsFinder
     last = nil
 
     CSV.foreach(file, headers:,) do |row|
-
       next if row.compact.empty?
       index = column - 1 # usually 0
       current = row[index].delete("^0-9").to_i

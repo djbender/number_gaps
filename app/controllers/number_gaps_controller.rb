@@ -3,19 +3,19 @@ class NumberGapsController < ApplicationController
   end
 
   def analyze
-    return redirect_to number_gaps_index_path, alert: 'Please select a file' unless file_params[:file]
+    return redirect_to number_gaps_index_path, alert: "Please select a file" unless file_params[:file]
 
     begin
       gaps = NumberGapsFinder.run!(
         file: file_params[:file].tempfile,
         column: file_params.fetch(:column, 1).to_i,
-        headers: file_params.fetch(:headers, 'true') == 'true'
+        headers: file_params.fetch(:headers, "true") == "true"
       )
-      
+
       @precision = gaps.last&.l&.digits&.count
       @gaps = gaps
       @formatted_gaps = format_gaps(gaps)
-      
+
       render :analyze
     rescue => e
       redirect_to root_path, alert: "Error processing file: #{e.message}"

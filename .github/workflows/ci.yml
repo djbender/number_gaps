@@ -24,7 +24,7 @@ jobs:
 
   scan_js:
     runs-on: ubuntu-latest
-
+    if: false # not using any javascript right now
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby file: '.ruby-version'
+ruby file: ".ruby-version"
 
 gem "rails", "~> 8.0.2"
 # Use the Puma web server [https://github.com/puma/puma]
