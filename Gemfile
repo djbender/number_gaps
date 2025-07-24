@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby file: '.ruby-version'
+
 gem "rails", "~> 8.0.2"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -30,3 +32,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "csv", "~> 3.3"

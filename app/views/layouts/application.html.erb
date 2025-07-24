@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Number Gaps" %></title>
+    <title><%= content_for(:title) || "Number Gaps Finder" %></title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -10,19 +11,99 @@
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%#= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <style>
+      /* Alert color classes for SimpleCSS */
+
+      /* Base alert styling */
+      .alert {
+        padding: 1rem;
+        margin: 1rem 0;
+        border: 1px solid;
+        border-radius: 4px;
+        font-weight: normal;
+      }
+
+      /* Success alert - green theme */
+      .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+      }
+
+      /* Info alert - blue theme */
+      .alert-info {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+      }
+
+      /* Warning alert - yellow/orange theme */
+      .alert-warning {
+        color: #856404;
+        background-color: #fff3cd;
+        border-color: #ffeaa7;
+      }
+
+      /* Error/Danger alert - red theme */
+      .alert-error,
+      .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+      }
+
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        .alert-success {
+          color: #75b798;
+          background-color: #1e3a28;
+          border-color: #2d5a3d;
+        }
+
+        .alert-info {
+          color: #7ab8c4;
+          background-color: #1e2f33;
+          border-color: #2d4a52;
+        }
+
+        .alert-warning {
+          color: #d4af37;
+          background-color: #3d3220;
+          border-color: #5c4a30;
+        }
+
+        .alert-error,
+        .alert-danger {
+          color: #f08080;
+          background-color: #3d1e20;
+          border-color: #5c2d30;
+        }
+      }
+    </style>
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <h1><a href="/" style="color: var(--text); text-decoration: none;">Number Gaps Finder</a></h1>
+    </header>
+    <main>
+      <% if notice %>
+        <p class="alert alert-success"><%= notice %></p>
+      <% end %>
+
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+
+      <p>Made for Laura</p>
+      <p>©2021-2025 Derek Bender</p>
+    </main>
   </body>
 </html>

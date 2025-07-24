@@ -1,0 +1,33 @@
+<section id="form">
+  <%= form_with url: number_gaps_upload_path, method: :post, multipart: true, local: true do |form| %>
+    <fieldset>
+      <legend>Upload a CSV</legend>
+      
+      <p>
+        <%= form.label :file, 'File', style: 'font-weight: bold' %>
+        <%= form.file_field :file, required: true, accept: '.csv' %>
+      </p>
+      
+      <p>
+        <%= form.label :column, 'Column Index', style: 'font-weight: bold' %>
+        <%= form.select :column, options_for_select((1..20).map { |col| [col, col] }, 2) %>
+      </p>
+
+      <p>
+        <div style='font-weight: bold'>Does the CSV have headers?</div>
+        <div class='radio-group'>
+          <div class='radio-option'>
+            <%= form.radio_button :headers, 'true', checked: true %>
+            <%= form.label :headers_true, 'Yes' %>
+          </div>
+          <div class='radio-option'>
+            <%= form.radio_button :headers, 'false' %>
+            <%= form.label :headers_false, 'No' %>
+          </div>
+        </div>
+      </p>
+    </fieldset>
+    
+    <%= form.submit 'Find Gaps' %>
+  <% end %>
+</section>

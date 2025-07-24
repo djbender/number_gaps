@@ -1,0 +1,11 @@
+<section>
+  <h2>Results</h2>
+  <% if @gaps.empty? %>
+    <p>No gaps were found.</p>
+  <% else %>
+    <p>Gaps were found!</p>
+    <pre style="overflow: unset"><%= @formatted_gaps %></pre>
+  <% end %>
+</section>
+
+<p><%= link_to "Upload Another File", root_path %></p>
