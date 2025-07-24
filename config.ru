@@ -1,3 +1,6 @@
-require './number_gaps_app'
+# This file is used by Rack-based servers to start the application.
 
-run NumberGapsApp
+require_relative "config/environment"
+
+run Rails.application
+Rails.application.load_server
