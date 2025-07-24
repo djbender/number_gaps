@@ -6,7 +6,24 @@ on:
     branches: [ main ]
 
 jobs:
+  zeitwerk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Check zeitwerk loading is correct
+        run: bin/rails zeitwerk:check
+
   scan_ruby:
+    name: Scan Ruby
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +40,9 @@ jobs:
         run: bin/brakeman --no-pager
 
   scan_js:
+    name: Scan JavaScript
     runs-on: ubuntu-latest
+
     if: false # not using any javascript right now
     steps:
       - name: Checkout code
@@ -39,6 +58,7 @@ jobs:
         run: bin/importmap audit
 
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,6 +74,7 @@ jobs:
         run: bin/rubocop -f github
 
   test:
+    name: Test
     runs-on: ubuntu-latest
 
     # services:
