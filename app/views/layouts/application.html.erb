@@ -93,13 +93,9 @@
       <h1><a href="/" style="color: var(--text); text-decoration: none;">Number Gaps Finder</a></h1>
     </header>
     <main>
-      <% if notice %>
-        <p class="alert alert-success"><%= notice %></p>
-      <% end %>
-
-      <% if alert %>
-        <p class="alert alert-danger"><%= alert %></p>
-      <% end %>
+      <% flash.each do |name, msg| -%>
+        <%= content_tag :p, msg, class: name %>
+      <% end -%>
       <%= yield %>
 
       <p>Made for Laura</p>

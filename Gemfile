@@ -34,3 +34,4 @@ group :test do
 end
 
 gem "csv", "~> 3.3"
+gem "ostruct", "~> 0.6.3"
