@@ -6,7 +6,7 @@ class NumberGapsController < ApplicationController
     return redirect_to number_gaps_index_path, alert: "Please select a file" unless file_params[:file]
 
     begin
-      gaps = NumberGapsFinder.run!(
+      gaps = NumberGapsFinder::Runner.run!(
         file: file_params[:file].tempfile,
         column: file_params.fetch(:column, 1).to_i,
         headers: file_params.fetch(:headers, "true") == "true"
