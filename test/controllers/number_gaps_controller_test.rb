@@ -36,7 +36,7 @@ class NumberGapsControllerTest < ActionDispatch::IntegrationTest
       OpenStruct.new(l: 4, digits: [ 4 ])
     ]
 
-    NumberGapsFinder.stub(:run!, mock_gaps) do
+    NumberGapsFinder::Runner.stub(:run!, mock_gaps) do
       post number_gaps_analyze_path, params: {
         file: fixture_file_analyze(@test_file.path, "text/csv"),
         column: 1,
@@ -53,7 +53,7 @@ class NumberGapsControllerTest < ActionDispatch::IntegrationTest
     mock_gaps = [ OpenStruct.new(l: 10, digits: [ 1, 0 ]) ]
     captured_args = nil
 
-    NumberGapsFinder.stub :run!, ->(args) {
+    NumberGapsFinder::Runner.stub :run!, ->(args) {
       captured_args = args
       mock_gaps
     } do
@@ -75,7 +75,7 @@ class NumberGapsControllerTest < ActionDispatch::IntegrationTest
   test "analyze handles NumberGapsFinder exceptions" do
     error_message = "Invalid file format"
 
-    NumberGapsFinder.stub :run!, ->(*) { raise StandardError, error_message } do
+    NumberGapsFinder::Runner.stub :run!, ->(*) { raise StandardError, error_message } do
       post number_gaps_analyze_path, params: {
         file: fixture_file_analyze(@test_file.path, "text/csv")
       }
@@ -86,7 +86,7 @@ class NumberGapsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "analyze handles nil gaps gracefully" do
-    NumberGapsFinder.stub :run!, [] do
+    NumberGapsFinder::Runner.stub :run!, [] do
       post number_gaps_analyze_path, params: {
         file: fixture_file_analyze(@test_file.path, "text/csv")
       }
