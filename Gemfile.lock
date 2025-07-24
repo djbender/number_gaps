@@ -161,6 +161,7 @@ GEM
     parser (3.3.8.0)
       ast (~> 2.4.1)
       racc
+    pg (1.5.9)
     pp (0.6.2)
       prettyprint
     prettyprint (0.2.0)
@@ -255,6 +256,12 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    solid_errors (0.7.0)
+      actionpack (>= 7.0)
+      actionview (>= 7.0)
+      activerecord (>= 7.0)
+      activesupport (>= 7.0)
+      railties (>= 7.0)
     stringio (3.1.7)
     thor (1.4.0)
     thruster (0.1.14)
@@ -303,10 +310,12 @@ DEPENDENCIES
   csv (~> 3.3)
   debug
   ostruct (~> 0.6.3)
+  pg (~> 1.5)
   puma (>= 5.0)
   rails (~> 8.0.2)
   rubocop-rails-omakase
   selenium-webdriver
+  solid_errors (~> 0.7.0)
   thruster
   web-console
 

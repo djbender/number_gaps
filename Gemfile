@@ -35,3 +35,5 @@ end
 
 gem "csv", "~> 3.3"
 gem "ostruct", "~> 0.6.3"
+gem "pg", "~> 1.5"
+gem "solid_errors", "~> 0.7.0"
