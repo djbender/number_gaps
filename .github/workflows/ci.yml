@@ -6,6 +6,15 @@ on:
     branches: [ main ]
 
 jobs:
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t number_gaps .
+
   zeitwerk:
     runs-on: ubuntu-latest
 
