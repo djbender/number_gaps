@@ -1,3 +1,14 @@
+puts "=== PUMA CONFIG DEBUG ==="
+puts "RAILS_MAX_THREADS: #{ENV['RAILS_MAX_THREADS'].inspect}"
+puts "PORT: #{ENV['PORT'].inspect}"
+puts "WEB_CONCURRENCY: #{ENV['WEB_CONCURRENCY'].inspect}"
+
+threads_count = ENV.fetch("RAILS_MAX_THREADS", 3).to_i
+puts "Calculated threads_count: #{threads_count.inspect}"
+
+port_number = ENV.fetch("PORT", 3000).to_i  
+puts "Calculated port: #{port_number.inspect}"
+puts "========================="
 # This configuration file will be evaluated by Puma. The top-level methods that
 # are invoked here are part of Puma's configuration DSL. For more information
 # about methods provided by the DSL, see https://puma.io/puma/Puma/DSL.html.
