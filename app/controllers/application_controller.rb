@@ -9,4 +9,11 @@ class ApplicationController < ActionController::Base
       session: session.inspect
     )
   end
+
+  if Rails.env.development?
+    rescue_from StandardError do |exception|
+      # Rails.error.report(exception) # This happens automatically anyway
+      redirect_to solid_errors.error_path(SolidErrors::Error.last), status: 307
+    end
+  end
 end
