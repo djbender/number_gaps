@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount SolidErrors::Engine, at: "/solid_errors"
+  mount SolidErrors::Engine, at: "/solid_errors" unless Rails.env.test?
   get "number_gaps/index"
   post "number_gaps/analyze"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
