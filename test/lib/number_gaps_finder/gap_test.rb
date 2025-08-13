@@ -24,13 +24,13 @@ class NumberGapsFinder::GapTest < Minitest::Test
   def test_pair_method_returns_array_of_first_and_last_values
     gap = NumberGapsFinder::Gap.new(f: 3, l: 7)
 
-    assert_equal [3, 7], gap.pair
+    assert_equal [ 3, 7 ], gap.pair
   end
 
   def test_pair_method_works_with_same_first_and_last_values
     gap = NumberGapsFinder::Gap.new(f: 5, l: 5)
 
-    assert_equal [5, 5], gap.pair
+    assert_equal [ 5, 5 ], gap.pair
   end
 
   def test_inspect_provides_readable_string_representation
@@ -62,7 +62,7 @@ class NumberGapsFinder::GapTest < Minitest::Test
 
     assert_equal 42, gap.f
     assert_equal 42, gap.l
-    assert_equal [42, 42], gap.pair
+    assert_equal [ 42, 42 ], gap.pair
     assert_equal "#<Gap f:42 l:42>", gap.inspect
   end
 
@@ -91,8 +91,8 @@ class NumberGapsFinder::GapTest < Minitest::Test
 
     assert_equal "5", gap.f
     assert_equal "10", gap.l
-    assert_equal ["5", "10"], gap.pair
-    assert_equal '#<Gap f:5 l:10>', gap.inspect
+    assert_equal [ "5", "10" ], gap.pair
+    assert_equal "#<Gap f:5 l:10>", gap.inspect
   end
 
   def test_initializing_requires_both_f_and_l_parameters
@@ -116,7 +116,7 @@ class NumberGapsFinder::GapTest < Minitest::Test
 
     assert_nil gap.f
     assert_nil gap.l
-    assert_equal [nil, nil], gap.pair
+    assert_equal [ nil, nil ], gap.pair
     assert_equal "#<Gap f: l:>", gap.inspect
   end
 
