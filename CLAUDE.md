@@ -24,7 +24,10 @@ bin/rails server  # Development server on port 3000
 ```bash
 bin/rails test                                    # Run all tests
 bin/rails test test/controllers/                  # Run controller tests
+bin/rails test test/lib/                          # Run library tests
 bin/rails test test/controllers/number_gaps_controller_test.rb  # Single test file
+bin/rails test test/lib/number_gaps_finder_test.rb             # Core algorithm tests
+bin/rails test test/lib/number_gaps_finder/gap_test.rb         # Gap class tests
 ```
 
 ### Code Quality
@@ -38,9 +41,16 @@ bin/brakeman                         # Security vulnerability scanning
 ### Core Algorithm
 The gap detection logic is centralized in `lib/number_gaps_finder/` with two key components:
 - `NumberGapsFinder::Runner` - Main algorithm that processes CSV data in a single pass
-- `Gap` class - Data structure representing number ranges (first, last)
+- `Gap` class - Data structure representing number ranges with `f` (first) and `l` (last) attributes
 
-The algorithm assumes:
+The algorithm flow:
+1. Iterates through CSV rows, skipping empty ones
+2. Extracts numbers from specified column using `delete("^0-9")`
+3. Tracks sequence continuity by comparing `current` with `last.succ`
+4. Creates `Gap` objects for missing ranges between `last.succ` and `current.pred`
+5. Returns array of gaps for formatting
+
+Key assumptions:
 - Numbers are in sequential order in the CSV
 - Column selection is 1-based (user-facing) but converted to 0-based internally
 - Non-numeric characters are stripped from fields using `delete("^0-9")`
@@ -48,14 +58,17 @@ The algorithm assumes:
 ### Web Interface
 - Single controller: `NumberGapsController`
 - Two actions: `index` (upload form) and `analyze` (process CSV and display results)
+- Routes: `GET /number_gaps/index` (root), `POST /number_gaps/analyze`
 - Views use Rails form helpers with multipart file uploads
 - Error handling redirects to root with flash messages
+- SolidErrors engine mounted at `/solid_errors` (disabled in test environment)
 
 ### Data Processing
-- CSV parsing handles headers optionally
-- Empty rows are skipped automatically
+- CSV parsing handles headers optionally via boolean parameter
+- Empty rows are skipped automatically using `row.compact.empty?`
 - Numbers are extracted by stripping non-digits, which handles formatted numbers like "YOSE 120196"
-- Output formatting includes zero-padding based on the largest number's digit count
+- Output formatting includes zero-padding based on the largest number's digit count via `sprintf("%0#{@precision}d", val)`
+- Gap ranges displayed as single numbers or "first-last" format
 
 ## Key Edge Cases to Consider
 
@@ -77,7 +90,25 @@ Uses PostgreSQL with a unique setup:
 ## Deployment
 
 Supports multiple deployment methods:
-- **Heroku**: `app.json` with health checks and postdeploy migrations
+- **Heroku**: `app.json` with health checks and postdeploy migrations # untested
 - **Docker**: Production-ready Dockerfile with Thruster for asset serving
-- **Dokku**: Configured with postdeploy database migrations
+- **Dokku**: Configured with postdeploy database migrations via `nginx.conf.sigil`
 - Uses Ruby 3.4.5 as specified in `.ruby-version`
+
+### Health Checks
+- Rails health check available at `/up` endpoint
+- Returns 200 if app boots without exceptions, otherwise 500
+- Useful for load balancers and uptime monitoring
+
+## File Structure
+
+Key files and directories:
+- `app/controllers/number_gaps_controller.rb` - Main controller handling uploads and analysis
+- `app/views/number_gaps/` - Upload form (`index.html.erb`) and results (`analyze.html.erb`)
+- `lib/number_gaps_finder.rb` - Main module requiring Gap class
+- `lib/number_gaps_finder/gap.rb` - Gap data structure with `f`, `l` attributes and utility methods
+- `test/` - Comprehensive test suite covering controllers and library logic
+- `config/routes.rb` - Application routing configuration
+- `Dockerfile` - Production container configuration
+- `app.json` - Heroku deployment configuration
+- `nginx.conf.sigil` - Dokku nginx configuration
