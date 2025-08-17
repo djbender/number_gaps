@@ -1,5 +1,7 @@
 # Number Gaps Finder
 
+[![CI](https://github.com/djbender/number_gaps/actions/workflows/ci.yml/badge.svg)](https://github.com/djbender/number_gaps/actions/workflows/ci.yml)
+
 A Rails 8 web application that analyzes CSV files to identify gaps in sequential number data. Upload a CSV file, specify which column contains numbers, and the app will find missing numbers in the sequence.
 
 ## Features
