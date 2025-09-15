@@ -31,6 +31,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "minitest-reporters", "~> 1.7"
+  gem "simplecov", "~> 0.22.0", require: false
 end
 
 gem "csv", "~> 3.3"
@@ -40,3 +42,5 @@ gem "pg", "~> 1.6"
 group :development, :production do
   gem "solid_errors", "~> 0.7.0"
 end
+
+gem "dotenv-rails", "~> 3.1"
