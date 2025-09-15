@@ -10,7 +10,7 @@ class NumberGapsControllerTest < ActionDispatch::IntegrationTest
   setup do
     # Create a temporary CSV file for testing
     @test_file_content = "header1,header2\n1,data\n3,data\n5,data"
-    @test_file = Tempfile.new([ "test", ".csv" ])
+    @test_file = Tempfile.new(["test", ".csv"])
     @test_file.write(@test_file_content)
     @test_file.rewind
   end

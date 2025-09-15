@@ -8,7 +8,7 @@ module NumberGapsFinder
       group_start = nil
       last = nil
 
-      CSV.foreach(file, headers:,) do |row|
+      CSV.foreach(file, headers:) do |row|
         next if row.compact.empty?
         index = column - 1 # usually 0
         current = row[index].delete("^0-9").to_i

@@ -5,7 +5,7 @@ require_relative "../../lib/number_gaps_finder"
 
 class NumberGapsFinderTest < Minitest::Test
   def setup
-    @temp_file = Tempfile.new([ "test_data", ".csv" ])
+    @temp_file = Tempfile.new(["test_data", ".csv"])
   end
 
   def teardown
@@ -22,14 +22,14 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_finds_no_gaps_in_consecutive_sequence
-    file_path = create_csv_file([ [ "1" ], [ "2" ], [ "3" ], [ "4" ], [ "5" ] ])
+    file_path = create_csv_file([["1"], ["2"], ["3"], ["4"], ["5"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_empty gaps
   end
 
   def test_finds_single_gap_in_sequence
-    file_path = create_csv_file([ [ "1" ], [ "2" ], [ "4" ], [ "5" ] ])
+    file_path = create_csv_file([["1"], ["2"], ["4"], ["5"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_equal 1, gaps.length
@@ -38,7 +38,7 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_finds_multiple_gaps_in_sequence
-    file_path = create_csv_file([ [ "1" ], [ "2" ], [ "5" ], [ "6" ], [ "9" ], [ "10" ] ])
+    file_path = create_csv_file([["1"], ["2"], ["5"], ["6"], ["9"], ["10"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_equal 2, gaps.length
@@ -53,7 +53,7 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_finds_large_gap_in_sequence
-    file_path = create_csv_file([ [ "1" ], [ "2" ], [ "10" ], [ "11" ] ])
+    file_path = create_csv_file([["1"], ["2"], ["10"], ["11"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_equal 1, gaps.length
@@ -62,14 +62,14 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_handles_empty_rows_by_skipping_them
-    file_path = create_csv_file([ [ "1" ], [], [ "2" ], [], [ "3" ] ])
+    file_path = create_csv_file([["1"], [], ["2"], [], ["3"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_empty gaps
   end
 
   def test_handles_non_numeric_characters_by_stripping_them
-    file_path = create_csv_file([ [ "YOSE 001" ], [ "YOSE 002" ], [ "YOSE 004" ] ])
+    file_path = create_csv_file([["YOSE 001"], ["YOSE 002"], ["YOSE 004"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_equal 1, gaps.length
@@ -79,9 +79,9 @@ class NumberGapsFinderTest < Minitest::Test
 
   def test_works_with_different_column_positions
     file_path = create_csv_file([
-      [ "name", "1", "data" ],
-      [ "name", "2", "data" ],
-      [ "name", "4", "data" ]
+      ["name", "1", "data"],
+      ["name", "2", "data"],
+      ["name", "4", "data"]
     ])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 2)
 
@@ -92,10 +92,10 @@ class NumberGapsFinderTest < Minitest::Test
 
   def test_handles_csv_with_headers
     file_path = create_csv_file([
-      [ "Number", "Description" ],
-      [ "1", "First" ],
-      [ "2", "Second" ],
-      [ "4", "Fourth" ]
+      ["Number", "Description"],
+      ["1", "First"],
+      ["2", "Second"],
+      ["4", "Fourth"]
     ])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1, headers: true)
 
@@ -105,14 +105,14 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_handles_single_row_without_gaps
-    file_path = create_csv_file([ [ "42" ] ])
+    file_path = create_csv_file([["42"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_empty gaps
   end
 
   def test_handles_sequence_starting_from_zero
-    file_path = create_csv_file([ [ "0" ], [ "1" ], [ "3" ] ])
+    file_path = create_csv_file([["0"], ["1"], ["3"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_equal 1, gaps.length
@@ -121,7 +121,7 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_handles_mixed_alphanumeric_data
-    file_path = create_csv_file([ [ "ABC123" ], [ "DEF124" ], [ "GHI126" ] ])
+    file_path = create_csv_file([["ABC123"], ["DEF124"], ["GHI126"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_equal 1, gaps.length
@@ -130,14 +130,14 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_handles_completely_non_numeric_data_as_zeros
-    file_path = create_csv_file([ [ "ABC" ], [ "DEF" ], [ "GHI" ] ])
+    file_path = create_csv_file([["ABC"], ["DEF"], ["GHI"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_empty gaps
   end
 
   def test_handles_large_numbers
-    file_path = create_csv_file([ [ "999998" ], [ "999999" ], [ "1000001" ] ])
+    file_path = create_csv_file([["999998"], ["999999"], ["1000001"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_equal 1, gaps.length
@@ -146,7 +146,7 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_handles_negative_looking_numbers_strips_minus_sign
-    file_path = create_csv_file([ [ "-1" ], [ "-2" ], [ "-4" ] ])
+    file_path = create_csv_file([["-1"], ["-2"], ["-4"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_equal 1, gaps.length
@@ -155,7 +155,7 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_handles_decimal_looking_numbers_strips_decimal_point
-    file_path = create_csv_file([ [ "1.0" ], [ "2.0" ], [ "4.0" ] ])
+    file_path = create_csv_file([["1.0"], ["2.0"], ["4.0"]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     # "1.0" becomes "10", "2.0" becomes "20", "4.0" becomes "40"
@@ -174,7 +174,7 @@ class NumberGapsFinderTest < Minitest::Test
   end
 
   def test_handles_file_with_only_empty_rows
-    file_path = create_csv_file([ [ "" ], [ nil ], [ "" ] ])
+    file_path = create_csv_file([[""], [nil], [""]])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
     assert_empty gaps
@@ -182,9 +182,9 @@ class NumberGapsFinderTest < Minitest::Test
 
   def test_handles_complex_formatted_numbers
     file_path = create_csv_file([
-      [ "ID-001-A" ],
-      [ "ID-002-B" ],
-      [ "ID-004-C" ]
+      ["ID-001-A"],
+      ["ID-002-B"],
+      ["ID-004-C"]
     ])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 1)
 
@@ -195,9 +195,9 @@ class NumberGapsFinderTest < Minitest::Test
 
   def test_handles_wide_csv_with_many_columns
     file_path = create_csv_file([
-      [ "col1", "col2", "1", "col4", "col5" ],
-      [ "col1", "col2", "2", "col4", "col5" ],
-      [ "col1", "col2", "4", "col4", "col5" ]
+      ["col1", "col2", "1", "col4", "col5"],
+      ["col1", "col2", "2", "col4", "col5"],
+      ["col1", "col2", "4", "col4", "col5"]
     ])
     gaps = NumberGapsFinder::Runner.run!(file: file_path, column: 3)
 
