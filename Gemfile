@@ -18,7 +18,7 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
-  gem "standard", "~> 1.50.0"
+  gem "standard", "~> 1.51.1"
 end
 
 group :development do
