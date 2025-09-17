@@ -32,7 +32,7 @@ bin/rails test test/lib/number_gaps_finder/gap_test.rb         # Gap class tests
 
 ### Code Quality
 ```bash
-bin/rubocop                          # Ruby style checking
+bin/standardrb                       # Ruby style checking
 bin/brakeman                         # Security vulnerability scanning
 ```
 

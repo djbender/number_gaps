@@ -1,4 +1,4 @@
-require 'simplecov'
+require "simplecov"
 SimpleCov.start :rails do
   enable_coverage :branch
   command_name "Minitest"
@@ -10,7 +10,7 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/mock"
-require 'minitest/reporters'
+require "minitest/reporters"
 require_relative "support/lizard_reporter"
 
 Minitest::Reporters.use! [

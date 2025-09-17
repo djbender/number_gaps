@@ -73,7 +73,7 @@ bin/rails test test/lib/                          # Run library tests
 ### Code Quality
 
 ```bash
-bin/rubocop                          # Ruby style checking
+bin/standardrb                       # Ruby style checking
 bin/brakeman                         # Security vulnerability scanning
 ```
 
