@@ -49,7 +49,7 @@ class LizardReporter < Minitest::StatisticsReporter
     request.body = payload.to_json
 
     response = http.request(request)
-    if response.code.to_i >= 400 || response.code.to_i < 500
+    if response.code.to_i >= 400 && response.code.to_i < 500
       puts "❌ Lizard API error (#{response.code}): #{response.body}"
     else
       puts "📊 Sent test results to Lizard: #{response.code}"
