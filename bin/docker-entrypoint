@@ -6,4 +6,11 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
+# Rails will fail fast if DB isn't ready, so we can just retry
+echo "Running database migrations..."
+until bin/rails db:migrate; do
+  echo "Migration failed, retrying in 5 seconds..."
+  sleep 2
+done
+
 exec "${@}"
