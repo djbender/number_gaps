@@ -15,9 +15,17 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 WORKDIR /rails
 
 # Install base packages
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl postgresql-client libjemalloc2 && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    mv /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bak && \
+    apt-get update && \
+    apt-get install --yes --no-install-recommends \
+      curl \
+      libjemalloc2 \
+      postgresql-client \
+      && \
+    mv /etc/apt/apt.conf.d/docker-clean.bak /etc/apt/apt.conf.d/docker-clean
+
 
 # Set production environment
 ENV RAILS_ENV="production" \
@@ -30,9 +38,17 @@ ENV RAILS_ENV="production" \
 FROM base AS build
 
 # Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential libpq-dev git libyaml-dev pkg-config && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    mv /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bak && \
+    apt-get update && \
+    apt-get install --yes --no-install-recommends \
+      build-essential \
+      git \
+      libpq-dev \
+      libyaml-dev \
+      pkg-config \
+      && \
+    mv /etc/apt/apt.conf.d/docker-clean.bak /etc/apt/apt.conf.d/docker-clean
 
 # Install application gems
 COPY .ruby-version Gemfile Gemfile.lock ./
