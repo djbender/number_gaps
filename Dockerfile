@@ -52,8 +52,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 # Install application gems
 COPY .ruby-version Gemfile Gemfile.lock ./
-RUN --mount=type=cache,target=/usr/local/bundle/cache \
-    (bundle check || bundle install) && \
+RUN (bundle check || bundle install) && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
