@@ -59,16 +59,6 @@ RUN (bundle check || bundle install) && \
 # Copy application code
 COPY . .
 
-# Accept git SHA as build argument
-ARG GIT_SHA
-ENV GIT_SHA=${GIT_SHA}
-
-# Write git SHA to file for runtime access
-RUN echo "Building with GIT_SHA: ${GIT_SHA:-unknown}" && \
-    echo "${GIT_SHA:-unknown}" > REVISION && \
-    echo "REVISION file contents:" && \
-    cat REVISION
-
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
@@ -86,6 +76,14 @@ COPY --from=build /rails /rails
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
     chown -R rails:rails log tmp db/*schema.rb
+
+# Accept git SHA as build argument and write to file for runtime access
+ARG GIT_SHA
+RUN echo "Building with GIT_SHA: ${GIT_SHA:-unknown}" && \
+    echo "${GIT_SHA:-unknown}" > REVISION && \
+    echo "REVISION file contents:" && \
+    cat REVISION
+
 USER rails
 
 # Entrypoint prepares the database.

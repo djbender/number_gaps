@@ -1,8 +1,8 @@
 # Get the current git SHA
 git_sha := `git rev-parse --short HEAD 2>/dev/null || echo "unknown"`
 
-# Docker image base name
-image_name := "registry.dokku.djbender.com/number_gaps"
+# Extract IMAGE_NAME from docker-bake.hcl using bake --print
+image_name := `GIT_SHA={{git_sha}} docker buildx bake --print 2>/dev/null | jq -r '.target.default.tags[0]' | cut -d: -f1`
 
 # List available recipes
 default:
@@ -10,21 +10,10 @@ default:
 
 # Build Docker image with git SHA for AMD64 and ARM64 platforms
 build:
-    docker buildx build \
-        --platform linux/amd64,linux/arm64 \
-        --build-arg GIT_SHA={{git_sha}} \
-        -t {{image_name}}:{{git_sha}} \
-        -t {{image_name}}:latest \
-        .
+    GIT_SHA={{git_sha}} docker buildx bake
 
 push:
-    docker buildx build \
-        --platform linux/amd64,linux/arm64 \
-        --build-arg GIT_SHA={{git_sha}} \
-        -t {{image_name}}:{{git_sha}} \
-        -t {{image_name}}:latest \
-        --push \
-        .
+    GIT_SHA={{git_sha}} docker buildx bake --push
 
 # Deploy to Dokku using SHA-tagged image
 deploy:
@@ -32,3 +21,18 @@ deploy:
 
 # Build, and deploy
 release: build push deploy
+
+# Debug: print image_name and git_sha values
+debug:
+    @echo "Variables:"
+    @echo "  git_sha: {{git_sha}}"
+    @echo "  image_name: {{image_name}}"
+    @echo ""
+    @echo "build command:"
+    @echo "  GIT_SHA={{git_sha}} docker buildx bake"
+    @echo ""
+    @echo "push command:"
+    @echo "  GIT_SHA={{git_sha}} docker buildx bake --push"
+    @echo ""
+    @echo "deploy command:"
+    @echo "  dokku git:from-image {{image_name}}:{{git_sha}}"
