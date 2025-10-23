@@ -10,11 +10,25 @@ default:
 
 # Build Docker image with git SHA for AMD64 and ARM64 platforms
 build:
-    docker buildx build --platform linux/amd64,linux/arm64 --build-arg GIT_SHA={{git_sha}} -t {{image_name}}:{{git_sha}} -t {{image_name}}:latest --push .
+    docker buildx build \
+        --platform linux/amd64,linux/arm64 \
+        --build-arg GIT_SHA={{git_sha}} \
+        -t {{image_name}}:{{git_sha}} \
+        -t {{image_name}}:latest \
+        .
+
+push:
+    docker buildx build \
+        --platform linux/amd64,linux/arm64 \
+        --build-arg GIT_SHA={{git_sha}} \
+        -t {{image_name}}:{{git_sha}} \
+        -t {{image_name}}:latest \
+        --push \
+        .
 
 # Deploy to Dokku using SHA-tagged image
 deploy:
     dokku git:from-image {{image_name}}:{{git_sha}}
 
 # Build, and deploy
-release: build deploy
+release: build push deploy

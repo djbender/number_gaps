@@ -29,10 +29,6 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
-# Accept git SHA as build argument
-ARG GIT_SHA
-ENV GIT_SHA=${GIT_SHA}
-
 # Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential libpq-dev git libyaml-dev pkg-config && \
@@ -47,6 +43,10 @@ RUN bundle install && \
 # Copy application code
 COPY . .
 
+# Accept git SHA as build argument
+ARG GIT_SHA
+ENV GIT_SHA=${GIT_SHA}
+
 # Write git SHA to file for runtime access
 RUN echo "${GIT_SHA:-unknown}" > REVISION
 
@@ -55,9 +55,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 # RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
-
-
-
 
 # Final stage for app image
 FROM base
