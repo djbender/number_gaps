@@ -23,10 +23,15 @@ RUN apt-get update -qq && \
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_WITHOUT="development" \
+    BUNDLE_JOBS="$(nproc)"
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
+
+# Accept git SHA as build argument
+ARG GIT_SHA
+ENV GIT_SHA=${GIT_SHA}
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
@@ -41,6 +46,9 @@ RUN bundle install && \
 
 # Copy application code
 COPY . .
+
+# Write git SHA to file for runtime access
+RUN echo "${GIT_SHA:-unknown}" > REVISION
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/

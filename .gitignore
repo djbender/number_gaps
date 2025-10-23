@@ -42,3 +42,6 @@
 
 # Ignore coverage reports
 /coverage
+
+# Ignore REVISION file (generated during Docker build)
+/REVISION
