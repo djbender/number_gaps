@@ -64,7 +64,10 @@ ARG GIT_SHA
 ENV GIT_SHA=${GIT_SHA}
 
 # Write git SHA to file for runtime access
-RUN echo "${GIT_SHA:-unknown}" > REVISION
+RUN echo "Building with GIT_SHA: ${GIT_SHA:-unknown}" && \
+    echo "${GIT_SHA:-unknown}" > REVISION && \
+    echo "REVISION file contents:" && \
+    cat REVISION
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
