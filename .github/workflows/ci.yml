@@ -116,6 +116,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
     if: >
       contains(github.event.pull_request.labels.*.name, 'dependencies')
       || github.event_name == 'push'
@@ -138,11 +140,13 @@ jobs:
 
       - name: Run tests
         env:
-          RAILS_ENV: test
           LIZARD_API_KEY: ${{ secrets.LIZARD_API_KEY }}
           LIZARD_URL: ${{ vars.LIZARD_URL }}
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails test test:system
+        run: bin/rails test
+
+      - name: Run system tests
+        run: bin/rails test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
