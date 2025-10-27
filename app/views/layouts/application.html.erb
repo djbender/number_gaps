@@ -98,9 +98,12 @@
       <% end -%>
       <%= yield %>
 
+    </main>
+    <footer>
+      <%= yield(:footer) if content_for?(:footer) %>
       <p>Made for Laura</p>
       <p>©2021-2025 Derek Bender</p>
       <p>Version: <%= GitRevision.sha %></p>
-    </main>
+    </footer>
   </body>
 </html>
