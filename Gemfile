@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
-gem "rails", "~> 8.1.0"
+gem "rails", "~> 8.1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
