@@ -44,4 +44,4 @@ group :development, :production do
   gem "solid_errors", "~> 0.7.0"
 end
 
-gem "dotenv-rails", "~> 3.1"
+gem "dotenv-rails", "~> 3.2"
