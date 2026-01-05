@@ -36,6 +36,7 @@ group :test do
   gem "simplecov", "~> 0.22.0", require: false
 end
 
+gem "bigdecimal"
 gem "csv", "~> 3.3"
 gem "ostruct", "~> 0.6.3"
 gem "pg", "~> 1.6"
