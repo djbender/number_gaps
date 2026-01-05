@@ -10,7 +10,7 @@ This is a Rails 8 web application that analyzes CSV files to find gaps in sequen
 
 ### Setup
 ```bash
-bundle install
+bundle install --jobs $(nproc)
 bin/rails db:create
 bin/rails db:migrate
 ```
@@ -93,7 +93,7 @@ Supports multiple deployment methods:
 - **Heroku**: `app.json` with health checks and postdeploy migrations # untested
 - **Docker**: Production-ready Dockerfile with Thruster for asset serving
 - **Dokku**: Configured with postdeploy database migrations via `nginx.conf.sigil`
-- Uses Ruby 3.4.5 as specified in `.ruby-version`
+- Uses Ruby 4.0.0 as specified in `.ruby-version`
 
 ### Health Checks
 - Rails health check available at `/up` endpoint

@@ -8,53 +8,46 @@
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.4.7
+ARG RUBY_VERSION=4.0.0
 FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 
 # Rails app lives here
 WORKDIR /rails
 
 # Install base packages
-RUN \
-    --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    mv /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bak && \
-    apt-get update && \
-    apt-get install --yes --no-install-recommends \
-      curl \
-      libjemalloc2 \
-      postgresql-client \
-      && \
-    mv /etc/apt/apt.conf.d/docker-clean.bak /etc/apt/apt.conf.d/docker-clean
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked <<-EOF
+  mv /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bak
+  apt-get update
+  apt-get install --yes --no-install-recommends curl libjemalloc2 postgresql-client
+  mv /etc/apt/apt.conf.d/docker-clean.bak /etc/apt/apt.conf.d/docker-clean
+  bundle config set jobs $(nproc)
+EOF
 
 
 # Set production environment
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development" \
-    BUNDLE_JOBS="$(nproc)"
+    BUNDLE_WITHOUT="development"
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
 # Install packages needed to build gems
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    mv /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bak && \
-    apt-get update && \
-    apt-get install --yes --no-install-recommends \
-      build-essential \
-      git \
-      libpq-dev \
-      libyaml-dev \
-      pkg-config \
-      && \
-    mv /etc/apt/apt.conf.d/docker-clean.bak /etc/apt/apt.conf.d/docker-clean
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked <<-EOF
+  mv /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bak
+  apt-get update
+  apt-get install --yes --no-install-recommends build-essential git libpq-dev libyaml-dev pkg-config
+  mv /etc/apt/apt.conf.d/docker-clean.bak /etc/apt/apt.conf.d/docker-clean
+EOF
 
 # Install application gems
 COPY .ruby-version Gemfile Gemfile.lock ./
-RUN (bundle check || bundle install) && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+RUN <<-EOF
+  bundle check || bundle install
+  rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
+  bundle exec bootsnap precompile --gemfile
+EOF
 
 # Copy application code
 COPY . .
@@ -73,16 +66,20 @@ COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
-RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails log tmp db/*schema.rb
+RUN <<-EOF
+  groupadd --system --gid 1000 rails
+  useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash
+  chown -R rails:rails log tmp db/*schema.rb
+EOF
 
 # Accept git SHA as build argument and write to file for runtime access
 ARG GIT_SHA
-RUN echo "Building with GIT_SHA: ${GIT_SHA:-unknown}" && \
-    echo "${GIT_SHA:-unknown}" > REVISION && \
-    echo "REVISION file contents:" && \
-    cat REVISION
+RUN <<-EOF
+  echo "Building with GIT_SHA: ${GIT_SHA:-unknown}"
+  echo "${GIT_SHA:-unknown}" > REVISION
+  echo "REVISION file contents:"
+  cat REVISION
+EOF
 
 USER rails
 
