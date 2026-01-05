@@ -12,6 +12,14 @@ default:
 build:
     GIT_SHA={{git_sha}} docker buildx bake
 
+# Build Docker image for ARM64 only
+build-arm:
+    GIT_SHA={{git_sha}} docker buildx bake --set '*.platform=linux/arm64'
+
+# Build Docker image for AMD64 only
+build-amd:
+    GIT_SHA={{git_sha}} docker buildx bake --set '*.platform=linux/amd64'
+
 push:
     GIT_SHA={{git_sha}} docker buildx bake --push
 
