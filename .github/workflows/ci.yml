@@ -2,10 +2,9 @@ name: CI
 
 on:
   push:
-    branches-ignore:
-      - "dependabot/**"
-  pull_request:
-    types: [labeled]
+    branches:
+      - main
+  pull_request: {}
   workflow_dispatch: {}
 
 permissions:
@@ -14,10 +13,6 @@ permissions:
 jobs:
   container:
     runs-on: ubuntu-latest
-    if: >
-      contains(github.event.pull_request.labels.*.name, 'dependencies')
-      || github.event_name == 'push'
-      || github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.1
@@ -38,10 +33,6 @@ jobs:
 
   zeitwerk:
     runs-on: ubuntu-latest
-    if: >
-      contains(github.event.pull_request.labels.*.name, 'dependencies')
-      || github.event_name == 'push'
-      || github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.1
@@ -60,10 +51,6 @@ jobs:
   scan_ruby:
     name: Scan Ruby
     runs-on: ubuntu-latest
-    if: >
-      contains(github.event.pull_request.labels.*.name, 'dependencies')
-      || github.event_name == 'push'
-      || github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.1
@@ -105,10 +92,6 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    if: >
-      contains(github.event.pull_request.labels.*.name, 'dependencies')
-      || github.event_name == 'push'
-      || github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.1
@@ -129,10 +112,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RAILS_ENV: test
-    if: >
-      contains(github.event.pull_request.labels.*.name, 'dependencies')
-      || github.event_name == 'push'
-      || github.event_name == 'workflow_dispatch'
     # services:
     #  redis:
     #    image: redis
