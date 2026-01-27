@@ -93,7 +93,7 @@ Supports multiple deployment methods:
 - **Heroku**: `app.json` with health checks and postdeploy migrations # untested
 - **Docker**: Production-ready Dockerfile with Thruster for asset serving
 - **Dokku**: Configured with postdeploy database migrations via `nginx.conf.sigil`
-- Uses Ruby 4.0.0 as specified in `.ruby-version`
+- Uses Ruby 4.0.1 as specified in `.ruby-version`
 
 ### Health Checks
 - Rails health check available at `/up` endpoint

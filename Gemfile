@@ -31,8 +31,10 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem "minitest"
+  gem "minitest-mock"
+  gem "minitest-reporters"
   gem "selenium-webdriver"
-  gem "minitest-reporters", "~> 1.7"
   gem "simplecov", "~> 0.22.0", require: false
 end
 
