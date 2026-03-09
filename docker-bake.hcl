@@ -1,6 +1,6 @@
 # Get the current git SHA
 variable "GIT_SHA" {
-  default = ""
+  default = "local"
 }
 
 # Docker image base name
