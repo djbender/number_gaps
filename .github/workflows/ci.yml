@@ -147,3 +147,11 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+
+  ci:
+    if: always()
+    needs: [container, zeitwerk, scan_ruby, scan_js, lint, test]
+    runs-on: ubuntu-slim
+    steps:
+      - if: ${{ !success() }}
+        run: exit 1
