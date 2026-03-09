@@ -14,8 +14,10 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
+ARG TARGETARCH
+
 # Install base packages
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked <<-EOF
+RUN --mount=type=cache,id=apt-base-${TARGETARCH},target=/var/cache/apt,sharing=locked <<-EOF
   mv /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bak
   apt-get update
   apt-get install --yes --no-install-recommends curl libjemalloc2 postgresql-client
@@ -33,8 +35,10 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
+ARG TARGETARCH
+
 # Install packages needed to build gems
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked <<-EOF
+RUN --mount=type=cache,id=apt-build-${TARGETARCH},target=/var/cache/apt,sharing=locked <<-EOF
   mv /etc/apt/apt.conf.d/docker-clean /etc/apt/apt.conf.d/docker-clean.bak
   apt-get update
   apt-get install --yes --no-install-recommends build-essential git libpq-dev libyaml-dev pkg-config
