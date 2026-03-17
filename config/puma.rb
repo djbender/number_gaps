@@ -7,6 +7,8 @@ preload_app!
 port ENV.fetch("PORT") { 3000 }
 environment ENV.fetch("RAILS_ENV") { "development" }
 
+activate_control_app
+
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 plugin :yabeda
