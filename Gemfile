@@ -48,3 +48,7 @@ group :development, :production do
 end
 
 gem "dotenv-rails", "~> 3.2"
+
+gem "yabeda-prometheus", "~> 0.9"
+gem "yabeda-rails", "~> 0.9"
+gem "yabeda-puma-plugin", "~> 0.7"
