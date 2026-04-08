@@ -66,7 +66,7 @@ end
 # Subscribe to cache reads for hit/miss tracking
 ActiveSupport::Notifications.subscribe("cache_read.active_support") do |event|
   result = event.payload[:hit] ? "hit" : "miss"
-  Yabeda.rails_cache_read_total.increment({ result: result })
+  Yabeda.rails_cache_read_total.increment({result: result})
 end
 
 Yabeda::Rails.install!
