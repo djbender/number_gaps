@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 ruby file: ".ruby-version"
 
+gem "rack", "2.2.6" # TEMP: test dependency-review action
 gem "rails", "~> 8.1.3"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
