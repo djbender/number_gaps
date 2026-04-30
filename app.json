@@ -12,6 +12,7 @@
   },
   "scripts": {
     "dokku": {
+      "predeploy": "bin/rails runner 'ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).each { |c| ActiveRecord::Base.establish_connection(c).connection.execute(\"SELECT 1\") }'",
       "postdeploy": "bundle exec rails db:migrate"
     }
   }
