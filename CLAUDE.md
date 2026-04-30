@@ -92,8 +92,8 @@ Uses PostgreSQL with a unique setup:
 Supports multiple deployment methods:
 - **Heroku**: `app.json` with health checks and postdeploy migrations # untested
 - **Docker**: Production-ready Dockerfile with Thruster for asset serving
-- **Dokku**: Configured with postdeploy database migrations via `nginx.conf.sigil`
-- Uses Ruby 4.0.1 as specified in `.ruby-version`
+- **Dokku**: Deploy via `just release` (build + push + `dokku git:from-image <sha>`). See `Justfile`. `app.json` defines `predeploy` (DB connection check) and `postdeploy` (`db:migrate`). `nginx.conf.sigil` configures nginx only.
+- Uses Ruby 4.0.3 as specified in `.ruby-version`
 
 ### Health Checks
 - Rails health check available at `/up` endpoint
