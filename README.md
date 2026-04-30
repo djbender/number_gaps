@@ -14,7 +14,7 @@ A Rails 8 web application that analyzes CSV files to identify gaps in sequential
 
 ## Requirements
 
-- Ruby 3.4.5
+- Ruby 4.0.3
 - PostgreSQL (for error tracking only)
 - Rails 8.0.2+
 
@@ -91,7 +91,27 @@ The application supports multiple deployment methods:
 
 - **Heroku**: Configured with `app.json` # untested
 - **Docker**: Production-ready `Dockerfile` with Thruster
-- **Dokku**: Supports postdeploy database migrations
+- **Dokku**: Deployed via SHA-tagged Docker images using `just` recipes (see `Justfile`)
+
+### Dokku release
+
+Requires `just`, `docker buildx`, `jq`, and the `dokku` CLI configured for the target host.
+
+```bash
+just release      # build (multi-arch) + push + deploy
+```
+
+Or step-by-step:
+
+```bash
+just build        # buildx bake AMD64 + ARM64, tagged with short git SHA
+just push         # push image to registry
+just deploy       # dokku git:from-image <image>:<sha>
+```
+
+Single-arch variants: `just build-arm`, `just build-amd`. Run `just` to list recipes or `just debug` to print resolved image name and commands.
+
+The Dokku app runs a `predeploy` DB connection check (via `app.json`) and a `postdeploy` `db:migrate`.
 
 ## Database Configuration
 
