@@ -23,6 +23,7 @@ RUN --mount=type=cache,id=apt-base-${TARGETARCH},target=/var/cache/apt,sharing=l
   apt-get install --yes --no-install-recommends curl libjemalloc2 postgresql-client
   mv /etc/apt/apt.conf.d/docker-clean.bak /etc/apt/apt.conf.d/docker-clean
   bundle config set jobs $(nproc)
+  ldconfig -p | grep -q libjemalloc
 EOF
 
 
@@ -30,7 +31,8 @@ EOF
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+    BUNDLE_WITHOUT="development" \
+    LD_PRELOAD="libjemalloc.so.2"
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
