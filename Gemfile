@@ -35,7 +35,7 @@ group :test do
   gem "minitest-mock"
   gem "minitest-reporters"
   gem "selenium-webdriver"
-  gem "simplecov", "~> 0.22.0", require: false
+  gem "simplecov", "~> 1.0.2", require: false
 end
 
 gem "bigdecimal"
