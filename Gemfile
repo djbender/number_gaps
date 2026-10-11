@@ -41,7 +41,7 @@ end
 gem "bigdecimal"
 gem "csv", "~> 3.3"
 gem "ostruct", "~> 0.6.3"
-gem "pg", "~> 1.6"
+gem "pg", "~> 1.7"
 
 group :development, :production do
   gem "solid_errors", "~> 0.7.0"
