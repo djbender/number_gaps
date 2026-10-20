@@ -44,7 +44,7 @@ gem "ostruct", "~> 0.6.3"
 gem "pg", "~> 1.7"
 
 group :development, :production do
-  gem "solid_errors", "~> 0.7.0"
+  gem "solid_errors", "~> 0.9.0"
 end
 
 gem "dotenv-rails", "~> 3.2"
