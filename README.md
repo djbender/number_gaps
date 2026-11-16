@@ -14,7 +14,7 @@ A Rails 8 web application that analyzes CSV files to identify gaps in sequential
 
 ## Requirements
 
-- Ruby 4.0.3
+- Ruby 4.0.9
 - PostgreSQL (for error tracking only)
 - Rails 8.0.2+
 
